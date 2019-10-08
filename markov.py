@@ -9,7 +9,7 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
-    
+
     """Contents of your file as one long string"""
 
     text_file = open(file_path).read().split()
@@ -43,11 +43,27 @@ def make_chains(text_string):
         [None]
     """
 
+    #thoughts! 
+
+    #input: ENTIRE string text in list 
+    #output: dictionary - tuples(key): list of following word(value)
+
+    #text_string = open_and_read_file(file_path)
     chains = {}
+    #for loop - i range(len(i - 2)) <-- make sure to stay in range
+    for i in range(len(text_string)-2):
+    #(first word [i] and second word [i+1]) - tuple
+        tuple_key = (text_string[i], text_string[i + 1])
 
-    # your code goes here
-
+        #dict.get(key, []) concatenate(+) following word bc .append() returns NONE
+        #following word[i+2] --> appended into empty list
+        chains[tuple_key] = chains.get(tuple_key,[]) + [text_string[i + 2]]
+    
+    #outside of loop
+    #return dictionary!
     return chains
+
+print(make_chains(open_and_read_file('green-eggs.txt')))
 
 
 def make_text(chains):
