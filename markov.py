@@ -63,7 +63,7 @@ def make_chains(text_string):
     #return dictionary!
     return chains
 
-print(make_chains(open_and_read_file('green-eggs.txt')))
+#print(make_chains(open_and_read_file('green-eggs.txt')))
 
 
 def make_text(chains):
@@ -71,9 +71,26 @@ def make_text(chains):
 
     words = []
 
-    # your code goes here
+    #for every key in the chains dictionary, grab the 1st index in that key + random word in that key's value list, then create a tuple out of the aforementioned and rebind it to a new variable 
+    for tuple_key, list_value in chains.items():
+        print(tuple_key, list_value)
+        new_key = (tuple_key[1], choice(list_value))
+        print(new_key)
+        if new_key in chains:
+            words.append(choice(chains[new_key]))
+            tuple_key = new_key
+    
+    # for tuple_key in chains.items():
+    #     if new_key == tuple_key:
+    #         new_key[1], choice()
 
-    return " ".join(words)
+    #search for the new tuple variable in keys! 
+    #REPEAT UNTIL 'sam i am?' or no longer in dictionary 
+
+    #WANT TO RETURN!! 
+    print (" ".join(words))
+
+make_text(make_chains(open_and_read_file('green-eggs.txt')))
 
 
 input_path = "green-eggs.txt"
