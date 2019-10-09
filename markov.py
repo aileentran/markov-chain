@@ -50,6 +50,8 @@ def make_chains(text_string):
 
     #text_string = open_and_read_file(file_path)
     chains = {}
+
+    text_string.append(None)
     #for loop - i range(len(i - 2)) <-- make sure to stay in range
     for i in range(len(text_string)-2):
     #(first word [i] and second word [i+1]) - tuple
@@ -58,27 +60,40 @@ def make_chains(text_string):
         #dict.get(key, []) concatenate(+) following word bc .append() returns NONE
         #following word[i+2] --> appended into empty list
         chains[tuple_key] = chains.get(tuple_key,[]) + [text_string[i + 2]]
-    
-    #outside of loop
-    #return dictionary!
     return chains
 
 #print(make_chains(open_and_read_file('green-eggs.txt')))
 
 
 def make_text(chains):
-    """Return text from chains."""
+#     """Return text from chains."""
 
-    words = []
+    first_key = choice(list(chains.keys()))
+    words = [first_key[0], first_key[1]]
+
+    # tuple_key = chains.keys()
+    random_word = choice(chains[first_key])
+    #print(random_word)
+
+    while random_word is not None:
+        words.append(random_word)
+        new_key = (words[-2], random_word)
+        random_word = choice(chains[new_key])
+
+
 
     #for every key in the chains dictionary, grab the 1st index in that key + random word in that key's value list, then create a tuple out of the aforementioned and rebind it to a new variable 
-    for tuple_key, list_value in chains.items():
-        print(tuple_key, list_value)
-        new_key = (tuple_key[1], choice(list_value))
-        print(new_key)
-        if new_key in chains:
-            words.append(choice(chains[new_key]))
-            tuple_key = new_key
+
+    #while random_word is not None:
+        #print(tuple_key, list_value)
+        #new_key = (tuple_key[1], choice(random_word))
+        #print(new_key)
+        # if new_key in chains:
+        #     random_word = choice(chains[new_key])
+        #     words.append(random_word)
+        #     tuple_key = new_key
+        #break
+            
     
     # for tuple_key in chains.items():
     #     if new_key == tuple_key:
@@ -88,9 +103,38 @@ def make_text(chains):
     #REPEAT UNTIL 'sam i am?' or no longer in dictionary 
 
     #WANT TO RETURN!! 
-    print (" ".join(words))
+    return " ".join(words)
 
-make_text(make_chains(open_and_read_file('green-eggs.txt')))
+
+
+
+
+# def make_text(chains):
+#     """Return text from chains."""
+
+#     key = choice(list(chains.keys()))
+#     words = [key[0], key[1]]
+#     word = choice(chains[key])
+
+#     # Keep looping until we reach a value of None
+#     # (which would mean it was the end of our original text)
+#     # Note that for long texts (like a full book), this might mean
+#     # it would run for a very long time.
+
+#     while word is not None:
+#         key = (key[1], word)
+#         words.append(word)
+#         word = choice(chains[key])
+
+#     return " ".join(words)
+
+
+
+
+
+
+
+print(make_text(make_chains(open_and_read_file('green-eggs.txt'))))
 
 
 input_path = "green-eggs.txt"
