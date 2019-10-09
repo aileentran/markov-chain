@@ -134,8 +134,6 @@ def make_text(chains):
 
 import sys
 
-print(sys.argv)
-
 
 input_path = sys.argv[1]
 
